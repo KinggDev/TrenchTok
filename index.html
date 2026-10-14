@@ -128,6 +128,29 @@
     .flow li + li::after { left: -10px; top: calc(50% - 3px); transform: rotate(-45deg); }
   }
 
+  /* flow: green travels viewer -> arrow -> learner -> arrow -> trader, then resets */
+  .flow .glow { position: absolute; inset: -1px; border: 1px solid var(--green); border-radius: 6px; opacity: 0; pointer-events: none; animation: 9s linear infinite; }
+  .flow .gline { position: absolute; left: 50%; top: -28px; height: 22px; border-left: 1px solid var(--green); transform: scaleY(0); transform-origin: top; animation: 9s linear infinite; }
+  .flow .gchev { position: absolute; left: calc(50% - 3px); top: -10px; width: 5px; height: 5px; border: solid var(--green); border-width: 0 1px 1px 0; transform: rotate(45deg); opacity: 0; animation: 9s linear infinite; }
+  .flow .g1 { animation-name: glow1; } .flow .g2 { animation-name: glow2; } .flow .g3 { animation-name: glow3; }
+  .flow .l1 { animation-name: drawy1; } .flow .l2 { animation-name: drawy2; }
+  .flow .c1 { animation-name: chev1; } .flow .c2 { animation-name: chev2; }
+  @keyframes glow1 { 0%, 2% { opacity: 0; } 12%, 80% { opacity: 1; } 90%, 100% { opacity: 0; } }
+  @keyframes glow2 { 0%, 30% { opacity: 0; } 40%, 80% { opacity: 1; } 90%, 100% { opacity: 0; } }
+  @keyframes glow3 { 0%, 58% { opacity: 0; } 68%, 80% { opacity: 1; } 90%, 100% { opacity: 0; } }
+  @keyframes drawy1 { 0%, 14% { transform: scaleY(0); opacity: 1; } 26%, 80% { transform: scaleY(1); opacity: 1; } 90% { transform: scaleY(1); opacity: 0; } 100% { transform: scaleY(0); opacity: 0; } }
+  @keyframes drawy2 { 0%, 42% { transform: scaleY(0); opacity: 1; } 54%, 80% { transform: scaleY(1); opacity: 1; } 90% { transform: scaleY(1); opacity: 0; } 100% { transform: scaleY(0); opacity: 0; } }
+  @keyframes drawx1 { 0%, 14% { transform: scaleX(0); opacity: 1; } 26%, 80% { transform: scaleX(1); opacity: 1; } 90% { transform: scaleX(1); opacity: 0; } 100% { transform: scaleX(0); opacity: 0; } }
+  @keyframes drawx2 { 0%, 42% { transform: scaleX(0); opacity: 1; } 54%, 80% { transform: scaleX(1); opacity: 1; } 90% { transform: scaleX(1); opacity: 0; } 100% { transform: scaleX(0); opacity: 0; } }
+  @keyframes chev1 { 0%, 25% { opacity: 0; } 29%, 80% { opacity: 1; } 90%, 100% { opacity: 0; } }
+  @keyframes chev2 { 0%, 53% { opacity: 0; } 57%, 80% { opacity: 1; } 90%, 100% { opacity: 0; } }
+  @media (min-width: 560px) {
+    .flow .gline { left: -62px; top: 50%; width: 58px; height: 0; border-left: 0; border-top: 1px solid var(--green); transform: scaleX(0); transform-origin: left; }
+    .flow .l1 { animation-name: drawx1; } .flow .l2 { animation-name: drawx2; }
+    .flow .gchev { left: -10px; top: calc(50% - 3px); transform: rotate(-45deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .flow .glow, .flow .gline, .flow .gchev { animation: none; } }
+
   .moves { display: grid; grid-template-columns: 1fr; gap: 34px 64px; }
   @media (min-width: 640px) { .moves { grid-template-columns: 1fr 1fr; } }
   .move h3 { font-size: 17.5px; margin-bottom: 6px; }
@@ -218,9 +241,9 @@
       <p>But they will see it on our page, and when they think "I need to start doing this" we're here to help, because we have our Discord server in the bio where they can learn. This is simple but super effective. We turn viewers into market participants on scale.</p>
     </div>
     <ol class="flow" aria-label="How a viewer becomes a trader">
-      <li><b><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>viewer</b><span>sees the edit</span></li>
-      <li><b><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4.2C6.6 3.2 4.6 3 2 3.2v9c2.6-.2 4.6 0 6 1 1.4-1 3.4-1.2 6-1v-9c-2.6-.2-4.6 0-6 1zM8 4.2v9"/></svg>learner</b><span>joins the Discord</span></li>
-      <li><b><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 13.5h12"/><path d="M2.5 11l3.5-3.5 2.5 2 5-5.5"/><path d="M10.5 4h3v3"/></svg>trader</b><span>makes the first trade</span></li>
+      <li><i class="glow g1" aria-hidden="true"></i><b><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>viewer</b><span>sees the edit</span></li>
+      <li><i class="glow g2" aria-hidden="true"></i><i class="gline l1" aria-hidden="true"></i><i class="gchev c1" aria-hidden="true"></i><b><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4.2C6.6 3.2 4.6 3 2 3.2v9c2.6-.2 4.6 0 6 1 1.4-1 3.4-1.2 6-1v-9c-2.6-.2-4.6 0-6 1zM8 4.2v9"/></svg>learner</b><span>joins the Discord</span></li>
+      <li><i class="glow g3" aria-hidden="true"></i><i class="gline l2" aria-hidden="true"></i><i class="gchev c2" aria-hidden="true"></i><b><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 13.5h12"/><path d="M2.5 11l3.5-3.5 2.5 2 5-5.5"/><path d="M10.5 4h3v3"/></svg>trader</b><span>makes the first trade</span></li>
     </ol>
   </section>
 
