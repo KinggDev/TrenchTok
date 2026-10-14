@@ -1,0 +1,7 @@
+# Dev-only files, not part of the site
+.claude/
+CLAUDE.md
+temporary screenshots/
+inspo1.png
+inspo2.png
+IMG_2507.png
