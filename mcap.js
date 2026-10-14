@@ -1,7 +1,7 @@
 // Live market cap from pump.fun.
 // Put the coin's contract address (mint) here on launch day.
 // For testing, any page also accepts ?ca=<address> in the URL.
-const TRENCHTOK_CA = "mYEhBziagzPxw1zpgU8rVobFsZyfkEW4HH5ECZj2dwQ";
+const TRENCHTOK_CA = "ng6pDHNYmSW7Sf2rr6Z2yrAGexVQ4SMRXc1v9Khpump";
 
 (() => {
   const REFRESH_MS = 5000;
