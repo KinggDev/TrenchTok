@@ -171,9 +171,18 @@
   @media (min-width: 640px) { .moves { grid-template-columns: 1fr 1fr; } }
   .move h3 { font-size: 17.5px; margin-bottom: 6px; }
 
-  .stats { list-style: none; margin: 46px auto 0; padding: 0; max-width: 420px; }
-  .stats li { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--faint); padding: 5px 0 4px; border-bottom: 1px solid var(--rule); }
-  .stats li b { font-weight: 400; color: var(--muted); }
+  /* numbers table, same style as the coin page's eight spends */
+  .tbl-wrap { max-width: 520px; margin: 30px auto 0; }
+  .nums { width: 100%; border-collapse: collapse; font-size: 12px; line-height: 1.35; }
+  .nums th { text-align: left; font-weight: 400; color: var(--faint); padding: 6px 8px 8px; font-size: 10.5px; }
+  .nums td { padding: 6px 8px; color: #a5a5a2; vertical-align: middle; }
+  .nums td:first-child { color: #d6d6d3; }
+  .nums td span { display: inline-block; }
+  .nums th:last-child, .nums td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .nums tbody tr:nth-child(odd) { background: #0e0e0e; }
+  .balance { margin: 110px 0 0; }
+  .balance svg { width: 100%; max-width: 560px; display: block; margin: 0 auto; }
+
 
   .faq { text-align: center; }
   .faq h3 { font-family: "Newsreader", serif; font-weight: 500; font-size: 17.5px; color: var(--head); margin: 0 0 8px; }
@@ -195,12 +204,9 @@
   <a class="brand" href="index.html"><img src="brand_assets/logo_transparent.png" alt="" width="24" height="24">trenchtok</a>
   <div class="nav-links">
     <a href="index.html" aria-current="page">the page</a>
-    <a href="coin.html">the coin</a>
-    <a href="#edits">edits</a>
-    <a href="#record">record</a>
-    <a href="#spend">spending</a>
-    <a href="#questions">questions</a>
-    <a href="https://www.tiktok.com/" target="_blank" rel="noopener">follow me</a>
+    <a href="#idea">idea</a>
+    <a href="#virality">virality</a>
+    <a href="#purpose">purpose</a>
   </div>
 </nav>
 
@@ -250,7 +256,7 @@
     <p class="chart-status" id="mcap-status"></p>
   </section>
 
-  <section class="col section centered">
+  <section class="col section centered" id="idea">
     <h2>The idea is small. Impact is huge.</h2>
     <div class="mid">
       <p>Most normies assume that crypto and especially memecoins are a scam. We're here to change that.</p>
@@ -264,7 +270,7 @@
     </ol>
   </section>
 
-  <section class="col section viral" id="edits">
+  <section class="col section viral" id="virality">
     <h2>Our most viral video</h2>
     <ul class="vstats">
       <li><b data-to="6.7" data-dec="1" data-suffix="M+">6.7M+</b> views</li>
@@ -285,7 +291,7 @@
     <a class="textlink" href="https://www.tiktok.com/@trench.tok/video/7672852454194695456" target="_blank" rel="noopener">Watch it on TikTok</a>
   </section>
 
-  <section class="col section" id="spend">
+  <section class="col section" id="purpose">
     <h2>What am I investing in?</h2>
     <p class="note">Your investment has a big role in creating:</p>
     <div class="moves">
@@ -296,26 +302,27 @@
     </div>
   </section>
 
-  <section class="col section centered" id="record">
-    <h2>Every edit is on the record.</h2>
-    <div class="mid">
-      <p>The page is the centre of the coin. Each edit costs something, and each one is logged with what it cost, how many people saw it and what the coin did after it went up.</p>
-      <p>So the record is a plain count of what the coin paid for and what came back. Nothing is hidden in a wallet nobody can see.</p>
+  <section class="col section" id="numbers">
+    <h2>Numbers</h2>
+    <p class="note">updates every 12h</p>
+    <div class="tbl-wrap">
+      <table class="nums">
+        <thead><tr><th>what</th><th>so far</th></tr></thead>
+        <tbody>
+          <tr><td>views</td><td><span data-to="10500000" data-suffix="+">10,500,000+</span></td></tr>
+          <tr><td>likes</td><td><span data-to="2000000" data-suffix="+">2,000,000+</span></td></tr>
+          <tr><td>followers</td><td><span data-to="113000" data-suffix="+">113,000+</span></td></tr>
+          <tr><td>Discord members</td><td><span data-to="450" data-suffix="+">450+</span></td></tr>
+          <tr><td>paid to editors</td><td><span data-to="3600" data-prefix="$" data-suffix="+">$3,600+</span></td></tr>
+        </tbody>
+      </table>
     </div>
-    <ul class="stats">
-      <li>edits posted <b>0</b></li>
-      <li>total views <b>&ndash;</b></li>
-      <li>followers <b>&ndash;</b></li>
-      <li>fees collected <b>&ndash;</b></li>
-      <li>spent on edits <b>&ndash;</b></li>
-      <li>spent on sound <b>&ndash;</b></li>
-      <li>spent on boosts <b>&ndash;</b></li>
-      <li>paid to collabs <b>&ndash;</b></li>
-      <li>burned so far <b>&ndash;</b></li>
-      <li>in reserve <b>&ndash;</b></li>
-      <li>holders <b>&ndash;</b></li>
-      <li>last edit posted <b>&ndash;</b></li>
-    </ul>
+    <div class="balance" aria-hidden="true">
+      <svg viewBox="0 0 560 60">
+        <line x1="0" y1="18" x2="560" y2="18" stroke="#9a9a9a" stroke-width="1.2"/>
+        <path d="M280 20 L266 44 L294 44 Z" fill="none" stroke="#9a9a9a" stroke-width="1.2"/>
+      </svg>
+    </div>
   </section>
 
   <section class="col section faq" id="questions">
@@ -336,40 +343,72 @@
 </main>
 
 <script>
-  // Count the viral video stats up from zero the first time they scroll into view.
+  // Count numbers up from zero the first time their group scrolls into view
+  // (the viral video stats and the Numbers table).
   (() => {
-    const nums = [...document.querySelectorAll(".vstats [data-to]")];
-    if (!nums.length || !("IntersectionObserver" in window)) return;
+    if (!("IntersectionObserver" in window)) return;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const show = (el, v) => {
       const dec = +el.dataset.dec || 0;
-      el.textContent = v.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec }) + (el.dataset.suffix || "");
+      el.textContent = (el.dataset.prefix || "") + v.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec }) + (el.dataset.suffix || "");
     };
-    nums.forEach((el) => show(el, 0));
 
-    const run = () => {
-      // Hold each number at its final width (measured now, after the font has
-      // loaded) so the row doesn't shift while counting.
-      nums.forEach((el) => {
-        show(el, +el.dataset.to);
-        el.style.minWidth = el.getBoundingClientRect().width + 4 + "px"; // digits differ slightly in width
-        show(el, 0);
-      });
-      const start = performance.now(), dur = 3000;
-      const tick = (now) => {
-        const t = Math.min((now - start) / dur, 1);
-        const k = 1 - Math.pow(1 - t, 4); // fast start, gentle stop
-        nums.forEach((el) => show(el, +el.dataset.to * k));
-        if (t < 1) requestAnimationFrame(tick);
+    const countUp = (group) => {
+      const nums = [...group.querySelectorAll("[data-to]")];
+      if (!nums.length) return;
+      nums.forEach((el) => show(el, 0));
+
+      const run = () => {
+        // Hold each number at its final width (measured now, after the font has
+        // loaded) so nothing shifts while counting.
+        nums.forEach((el) => {
+          show(el, +el.dataset.to);
+          el.style.minWidth = el.getBoundingClientRect().width + 4 + "px"; // digits differ slightly in width
+          show(el, 0);
+        });
+        const start = performance.now(), dur = 3000;
+        const tick = (now) => {
+          const t = Math.min((now - start) / dur, 1);
+          const k = 1 - Math.pow(1 - t, 4); // fast start, gentle stop
+          nums.forEach((el) => show(el, Math.round(+el.dataset.to * k * 10 ** (+el.dataset.dec || 0)) / 10 ** (+el.dataset.dec || 0)));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
       };
-      requestAnimationFrame(tick);
+
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { io.disconnect(); run(); }
+      }, { threshold: 0.6 });
+      io.observe(group);
     };
 
-    const io = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); run(); }
-    }, { threshold: 0.6 });
-    io.observe(document.querySelector(".vstats"));
+    document.querySelectorAll(".vstats, .nums").forEach(countUp);
+  })();
+</script>
+<script>
+  // Nav links: scroll so the section sits in the middle of the screen.
+  // A section taller than the screen lines up near the top instead, so its heading stays visible.
+  (() => {
+    const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const go = (id, behavior) => {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      const top = r.height < innerHeight - 80
+        ? scrollY + r.top - (innerHeight - r.height) / 2
+        : scrollY + r.top - 40;
+      scrollTo({ top: Math.max(0, top), behavior });
+      return true;
+    };
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href").slice(1);
+        if (go(id, smooth ? "smooth" : "auto")) { e.preventDefault(); history.replaceState(null, "", "#" + id); }
+      });
+    });
+    // Arriving from the coin page with a #section in the address.
+    if (location.hash) addEventListener("load", () => go(location.hash.slice(1), "auto"));
   })();
 </script>
 <script src="mcap.js?v=4"></script>
