@@ -5,8 +5,15 @@ const TRENCHTOK_CA = "ng6pDHNYmSW7Sf2rr6Z2yrAGexVQ4SMRXc1v9Khpump";
 
 (() => {
   const REFRESH_MS = 5000;
-  const COIN_API = "https://frontend-api-v3.pump.fun/coins-v2/";
-  const CANDLE_API = "https://swap-api.pump.fun/v2/coins/";
+  // pump.fun only answers browsers on localhost. Everywhere else, go through
+  // the site's own /api/pump function (api/pump.js), which asks pump.fun for us.
+  const LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
+  const coinUrl = (ca) => LOCAL
+    ? `https://frontend-api-v3.pump.fun/coins-v2/${ca}`
+    : `/api/pump?ca=${ca}`;
+  const candleUrl = (ca, interval, limit, createdTs) => LOCAL
+    ? `https://swap-api.pump.fun/v2/coins/${ca}/candles?interval=${interval}&limit=${limit}&currency=USD&createdTs=${createdTs}`
+    : `/api/pump?ca=${ca}&candles=1&interval=${interval}&limit=${limit}&createdTs=${createdTs}`;
 
   const ca = (new URLSearchParams(location.search).get("ca") || TRENCHTOK_CA).trim();
 
@@ -87,15 +94,13 @@ const TRENCHTOK_CA = "ng6pDHNYmSW7Sf2rr6Z2yrAGexVQ4SMRXc1v9Khpump";
   const refresh = async () => {
     clearTimeout(timer);
     try {
-      const coin = await getJSON(COIN_API + ca);
+      const coin = await getJSON(coinUrl(ca));
       const mcap = Number(coin.usd_market_cap ?? coin.market_cap_usd);
       const supply = Number(coin.total_supply) / 10 ** Number(coin.base_decimals ?? 6);
 
       // Young coins get 1-minute candles (last 5 hours), older ones 5-minute candles (last 24 hours).
       const young = Date.now() - coin.created_timestamp < 5 * 3600e3;
-      const candles = await getJSON(
-        `${CANDLE_API}${ca}/candles?interval=${young ? "1m" : "5m"}&limit=${young ? 300 : 288}&currency=USD&createdTs=${coin.created_timestamp}`
-      );
+      const candles = await getJSON(candleUrl(ca, young ? "1m" : "5m", young ? 300 : 288, coin.created_timestamp));
       const points = candles.map((c) => ({ t: c.timestamp, v: parseFloat(c.close) * supply }));
       points.push({ t: Date.now(), v: mcap });
 
