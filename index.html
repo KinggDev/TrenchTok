@@ -56,15 +56,29 @@
   .hero h1 { font-family: "Newsreader", serif; font-weight: 400; font-size: clamp(36px, 6vw, 52px); line-height: 1.1; letter-spacing: -0.02em; color: var(--head); margin: 0; }
   .hero .sub { font-family: "Newsreader", serif; font-size: 20px; line-height: 1.45; color: var(--head); max-width: 560px; margin: 14px auto 26px; text-wrap: balance; }
   .hero p { color: var(--muted); }
+  .hero .lede { margin-top: 22px; }
+  .hero-logo { display: block; width: 96px; height: auto; margin: 0 auto 22px; }
   .textlink { display: inline-block; margin-top: 22px; color: #fff; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #777; transition: text-decoration-color .2s, opacity .2s; }
   .textlink:hover { text-decoration-color: #fff; }
   .textlink:active { opacity: .6; }
   .ca { margin-top: 24px; font-size: 11.5px; color: var(--muted); }
+  .ca { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .ca img { width: 14px; height: 14px; object-fit: contain; margin-right: 7px; }
   .ca span { color: var(--faint); margin-right: 8px; }
   .ca button { all: unset; cursor: pointer; color: var(--muted); transition: color .2s, opacity .2s; }
   .ca button:hover { color: #fff; }
   .ca button:active { opacity: .6; }
   .ca button:focus-visible { outline: 1px solid var(--head); outline-offset: 3px; }
+
+  /* blurred TikTok-colour glow behind the hero */
+  .hero-glow { position: absolute; top: 0; left: 0; right: 0; height: 900px; overflow: hidden; z-index: -1; pointer-events: none; }
+  .hero-glow span { position: absolute; border-radius: 50%; filter: blur(110px); }
+  .hero-glow .cyan { width: 440px; height: 440px; top: 120px; left: calc(50% - 640px); background: #25f4ee; opacity: .22; }
+  .hero-glow .pink { width: 460px; height: 460px; top: 200px; left: calc(50% + 180px); background: #fe2c55; opacity: .2; }
+  @media (max-width: 640px) {
+    .hero-glow .cyan { width: 300px; height: 300px; left: -150px; top: 140px; }
+    .hero-glow .pink { width: 300px; height: 300px; left: auto; right: -150px; top: 260px; }
+  }
 
   /* market cap */
   .val { text-align: center; margin-top: 110px; }
@@ -189,14 +203,15 @@
 </nav>
 
 <main>
+  <div class="hero-glow" aria-hidden="true"><span class="cyan"></span><span class="pink"></span></div>
   <header class="hero col">
+    <img class="hero-logo reveal" src="brand_assets/logo_transparent.png" alt="Trenchtok" width="96" height="98">
     <h1 class="reveal">Onboard the masses.</h1>
-    <p class="sub reveal d1">Trenchtok is a project that understands the attention markets. We know how to get viral and how to make memecoins cool again.</p>
-    <div class="narrow reveal d2">
-      <p>Trenchtok cuts short edits about memecoins: the launches, the rugs and the few that ran. The page has posted from the trenches since day one. Now it has a coin on Solana, and a slice of every trade pays for the next edit. Nobody gets a cut on the side. You can watch where every coin goes.</p>
+    <div class="narrow lede reveal d1">
+      <p>Trenchtok is the biggest memecoin editing page. We've generated millions of views and onboarded thousands of people. Now you can invest in us and therefore in onboarding new trenchers and creating more liquidity.</p>
     </div>
     <a class="textlink reveal d3" href="coin.html">Why this exists</a>
-    <p class="ca reveal d3"><span>CA</span><button type="button" id="ca" aria-label="Copy contract address">Contract address posts here on launch day</button></p>
+    <p class="ca reveal d3"><img src="brand_assets/pumpfun.png" alt="pump.fun" width="14" height="14"><span>CA</span><button type="button" id="ca" aria-label="Copy contract address">Contract address posts here on launch day</button></p>
   </header>
 
   <section class="val col" aria-label="Market cap">
