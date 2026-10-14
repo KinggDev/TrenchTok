@@ -1,9 +1,10 @@
 // Live market cap from pump.fun.
 // Put the coin's contract address (mint) here on launch day.
 // For testing, any page also accepts ?ca=<address> in the URL.
-const TRENCHTOK_CA = "ng6pDHNYmSW7Sf2rr6Z2yrAGexVQ4SMRXc1v9Khpump";
-// Set to true to turn the live market cap back on. While false, the page
-// makes no requests to pump.fun or /api/pump.
+const TRENCHTOK_CA = "";
+// Set to true to turn the live market cap back on for the public site. While
+// false, trenchtok.fun makes no requests to pump.fun or /api/pump.
+// On localhost the chart always runs, for testing.
 const LIVE = false;
 
 (() => {
@@ -128,7 +129,7 @@ const LIVE = false;
     setStatus("The chart goes live when the coin launches on pump.fun.");
     return;
   }
-  if (!LIVE) {
+  if (!LIVE && !LOCAL) {
     setStatus("The live market cap is switched off for now.");
     return;
   }
