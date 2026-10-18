@@ -180,15 +180,8 @@
   .nums td span { display: inline-block; }
   .nums th:last-child, .nums td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
   .nums tbody tr:nth-child(odd) { background: #0e0e0e; }
-  .balance { margin: 110px 0 0; }
+  .balance { margin: 110px 0 140px; }
   .balance svg { width: 100%; max-width: 560px; display: block; margin: 0 auto; }
-
-
-  .faq { text-align: center; }
-  .faq h3 { font-family: "Newsreader", serif; font-weight: 500; font-size: 17.5px; color: var(--head); margin: 0 0 8px; }
-  .faq p { color: var(--muted); font-size: 12px; line-height: 1.85; margin: 0 0 46px; }
-
-  .closing { font-family: "Newsreader", serif; font-size: clamp(22px, 3.4vw, 26px); line-height: 1.4; color: var(--head); text-align: center; max-width: 600px; margin: 150px auto 0; padding: 0 16px 140px; }
 
   .reveal { opacity: 0; transform: translateY(8px); animation: rise 1.1s var(--ease) forwards; }
   .reveal.d1 { animation-delay: .12s; } .reveal.d2 { animation-delay: .24s; } .reveal.d3 { animation-delay: .36s; }
@@ -325,21 +318,6 @@
     </div>
   </section>
 
-  <section class="col section faq" id="questions">
-    <h2>The questions we can't skip.</h2>
-    <div class="mid" style="margin-top:34px">
-      <h3>Is this financial advice?</h3>
-      <p>No. The page makes edits about memecoins, and memecoins can go to zero. Buy only what you are fine losing, and never because an edit told you to.</p>
-      <h3>Does the creator hold coins?</h3>
-      <p>The creator wallet is listed on the record page with its full balance. Any sale from it is posted before it happens, not after.</p>
-      <h3>Who decides what gets spent?</h3>
-      <p>The page decides spending on edits. Holders vote on which coin gets covered next. Both show up on the record with the amount and the date.</p>
-      <h3>What happens if the page stops posting?</h3>
-      <p>The reserve stays where it is, and the record shows that too. A page that stops posting has nothing to spend on.</p>
-    </div>
-  </section>
-
-  <p class="closing">That is the whole of it: a page that makes edits about coins, paid for by its own coin, with every spend out in the open.</p>
 </main>
 
 <script>
@@ -411,7 +389,7 @@
     if (location.hash) addEventListener("load", () => go(location.hash.slice(1), "auto"));
   })();
 </script>
-<script src="mcap.js?v=6"></script>
+<script src="mcap.js?v=8"></script>
 <script>
   const ca = document.getElementById('ca');
   ca.addEventListener('click', () => {
