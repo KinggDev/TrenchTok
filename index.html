@@ -46,6 +46,16 @@
   .nav-links a:hover { color: var(--head); }
   .nav-links a:active { opacity: .6; }
   .nav-links a[aria-current="page"] { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+  .follow { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; color: #fff; text-decoration: none; padding: 6px 15px 6px 12px; border-radius: 999px; background: #fe2c55; box-shadow: 0 6px 18px -8px rgba(254, 44, 85, .7); white-space: nowrap; transition: background-color .2s, box-shadow .2s, transform .2s; }
+  .follow svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
+  .follow:hover { background: #ff4468; box-shadow: 0 8px 22px -8px rgba(254, 44, 85, .9); }
+  .follow:active { transform: scale(.97); }
+  .nav .follow { background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .22); box-shadow: none; padding: 5px 14px 5px 11px; }
+  .nav .follow:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .4); box-shadow: none; }
+  .hero-follow { margin: 26px 0 0; font-size: 13.5px; padding: 10px 22px 10px 18px; gap: 9px; }
+  .hero-follow svg { width: 15px; height: 15px; }
+  .follow:focus-visible { outline: 1px solid var(--head); outline-offset: 3px; }
+  @media (max-width: 560px) { .nav { row-gap: 10px; } .follow { order: 2; } .nav-links { order: 3; width: 100%; } }
 
   .col { width: 100%; max-width: 720px; margin: 0 auto; padding: 0 16px; }
   .narrow { max-width: 470px; margin-left: auto; margin-right: auto; }
@@ -232,8 +242,13 @@
     .bg-item:nth-child(even) { display: none; }
   }
 
+  /* closing statement */
+  .closing-sec { max-width: 640px; margin: 170px auto 0; padding: 0 16px 160px; text-align: center; }
+  .closing { font-family: "Newsreader", serif; font-size: clamp(22px, 3.4vw, 28px); line-height: 1.4; letter-spacing: -0.01em; color: var(--head); margin: 0 0 22px; text-wrap: balance; }
+  .closing.last { margin: 40px 0 0; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: -0.02em; }
+
   /* socials */
-  .socials-sec { padding-bottom: 140px; }
+  .socials-sec { padding-bottom: 0; }
   .socials { list-style: none; padding: 0; margin: 0 auto; max-width: 560px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
   .social { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 26px 12px 22px; text-decoration: none; text-align: center; background: linear-gradient(150deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .015)), #0c0c0d; border: 1px solid rgba(255, 255, 255, .1); border-radius: 16px; transition: transform .35s var(--ease), border-color .2s, background-color .2s; }
   .social svg { width: 26px; height: 26px; fill: var(--head); margin-bottom: 10px; }
@@ -284,6 +299,7 @@
     <a href="#virality">virality</a>
     <a href="#purpose">purpose</a>
   </div>
+    <a class="follow" href="https://www.tiktok.com/@trench.tok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>Follow us</a>
 </nav>
 
 <main>
@@ -294,7 +310,7 @@
     <div class="narrow lede reveal d2">
       <p>Trenchtok is the biggest memecoin editing page. We've generated millions of views and onboarded thousands of people. Now you can invest in us and therefore in onboarding new trenchers and creating more liquidity.</p>
     </div>
-    <a class="textlink reveal d3" href="coin.html">Why this exists</a>
+    <div class="reveal d3"><a class="follow hero-follow" href="https://www.tiktok.com/@trench.tok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>Follow us</a></div>
     <p class="ca reveal d4"><img src="brand_assets/pumpfun.png" alt="pump.fun" width="14" height="14"><span>CA</span><button type="button" id="ca" aria-label="Copy contract address">To be announced</button></p>
   </header>
 
@@ -434,6 +450,12 @@
       <li><a class="social" href="https://x.com/Trenchtokdotfun" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg><b>X</b><span>@Trenchtokdotfun</span></a></li>
       <li><a class="social" href="https://discord.gg/QXgnbBthzZ" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.332-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.332-.946 2.418-2.157 2.418z"/></svg><b>Discord</b><span>join the server</span></a></li>
     </ul>
+  </section>
+
+  <section class="col closing-sec">
+    <p class="closing">Most projects start before the results. We already delivered the results. We are only growing from here.</p>
+    <p class="closing">You're placing the bet on the most viral memecoin page ever.</p>
+    <p class="closing last">Position accordingly.</p>
   </section>
 
 </main>
