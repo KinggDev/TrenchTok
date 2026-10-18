@@ -72,15 +72,15 @@
 
   /* blurred TikTok-colour glow behind the hero */
   .hero-glow { position: absolute; top: 0; left: 0; right: 0; height: 900px; overflow: hidden; z-index: -1; pointer-events: none; }
-  .hero-glow span { position: absolute; border-radius: 50%; filter: blur(110px); }
+  .hero-glow span { position: absolute; border-radius: 50%; box-sizing: content-box; padding: 110px; margin: -110px; }
   /* on load the circles drift in from the sides and fade up, behind the text */
   .hero-glow .cyan { animation: glow-in-left 2.4s cubic-bezier(.2, .7, .2, 1) both; }
   .hero-glow .pink { animation: glow-in-right 2.4s .15s cubic-bezier(.2, .7, .2, 1) both; }
   @keyframes glow-in-left { from { opacity: 0; transform: translateX(-220px) scale(.7); } }
   @keyframes glow-in-right { from { opacity: 0; transform: translateX(220px) scale(.7); } }
   @media (prefers-reduced-motion: reduce) { .hero-glow .cyan, .hero-glow .pink { animation: none; } }
-  .hero-glow .cyan { width: 440px; height: 440px; top: 120px; left: calc(50% - 640px); background: #25f4ee; opacity: .22; }
-  .hero-glow .pink { width: 460px; height: 460px; top: 200px; left: calc(50% + 180px); background: #fe2c55; opacity: .2; }
+  .hero-glow .cyan { width: 440px; height: 440px; top: 120px; left: calc(50% - 640px); background: radial-gradient(closest-side, rgba(37,244,238,1), rgba(37,244,238,.55) 45%, rgba(37,244,238,.18) 75%, rgba(37,244,238,0)); opacity: .22; }
+  .hero-glow .pink { width: 460px; height: 460px; top: 200px; left: calc(50% + 180px); background: radial-gradient(closest-side, rgba(254,44,85,1), rgba(254,44,85,.55) 45%, rgba(254,44,85,.18) 75%, rgba(254,44,85,0)); opacity: .2; }
   @media (max-width: 640px) {
     .hero-glow .cyan { width: 300px; height: 300px; left: -150px; top: 140px; }
     .hero-glow .pink { width: 300px; height: 300px; left: auto; right: -150px; top: 260px; }
@@ -122,7 +122,7 @@
   .vstats { list-style: none; padding: 0; margin: -6px 0 44px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 28px; font-size: 12.5px; color: var(--muted); }
   .vstats b { display: inline-block; font-weight: 500; color: var(--head); margin-right: 3px; font-variant-numeric: tabular-nums; text-align: right; }
   .phone-wrap { position: relative; }
-  .phone-glow { position: absolute; top: 50%; left: 50%; width: min(480px, 92vw); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: #fe2c55; opacity: .2; filter: blur(110px); z-index: -1; pointer-events: none; }
+  .phone-glow { position: absolute; top: 50%; left: 50%; width: min(480px, 92vw); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; box-sizing: content-box; padding: 110px; background: radial-gradient(closest-side, rgba(254,44,85,1), rgba(254,44,85,.55) 45%, rgba(254,44,85,.18) 75%, rgba(254,44,85,0)); opacity: .2; z-index: -1; pointer-events: none; }
   .iphone { position: relative; width: min(290px, 78vw); margin: 0 auto; padding: 11px; background: #0d0d0d; border: 1px solid #3c3c3c; border-radius: 48px; box-shadow: inset 0 0 0 2px #1d1d1d; }
   .iphone::before, .iphone::after { content: ""; position: absolute; width: 3px; background: #2a2a2a; border-radius: 2px; }
   .iphone::before { left: -4px; top: 112px; height: 54px; box-shadow: 0 -38px 0 -12px #2a2a2a; }
@@ -198,7 +198,7 @@
   .stack-cards { position: relative; width: 100%; height: 320px; }
   @media (max-width: 640px) { .stack-cards { height: 380px; } }
   .stack-glow { position: absolute; left: 50%; top: 50%; pointer-events: none; }
-  .stack-glow span { position: absolute; width: 360px; height: 360px; border-radius: 50%; filter: blur(100px); background: #fff; transform: translate(-50%, -50%); }
+  .stack-glow span { position: absolute; width: 360px; height: 360px; border-radius: 50%; box-sizing: content-box; padding: 100px; background: radial-gradient(closest-side, rgba(255,255,255,1), rgba(255,255,255,.55) 45%, rgba(255,255,255,.18) 75%, rgba(255,255,255,0)); transform: translate(-50%, -50%); }
   .stack-glow .cyan { left: -140px; opacity: .07; }
   .stack-glow .pink { left: 140px; top: 40px; opacity: .05; }
   .card { position: absolute; left: 50%; top: 50%; width: min(560px, calc(100vw - 32px)); min-height: 280px; padding: 40px 40px 36px; display: flex; flex-direction: column; justify-content: center; text-align: left;
@@ -220,11 +220,17 @@
   }
 
   /* grey, blurred charts / numbers / icons behind "What am I investing in?"; fades with scroll */
-  .purpose-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; color: #8b8b88; overflow: hidden; }
+  .purpose-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; color: #8b8b88; overflow: hidden; will-change: opacity; }
   .bg-item { position: absolute; left: var(--x); top: var(--y); opacity: var(--o); filter: blur(var(--b)); transform: translate3d(0, calc(var(--drift, 0) * var(--s) * 1px), 0); }
   .bg-num { font-family: "DM Sans", sans-serif; font-weight: 500; font-size: clamp(22px, 3.2vw, 40px); letter-spacing: -0.02em; white-space: nowrap; }
   .bgi { height: auto; }
   @media (max-width: 640px) { .bg-item { scale: .7; } .bg-num { font-size: 20px; } }
+
+  /* phones: live glass blur and lots of blurred pieces are too heavy to redraw while scrolling */
+  @media (max-width: 640px), (hover: none) {
+    .card { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(150deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02) 55%, rgba(255, 255, 255, .04)), rgba(16, 16, 18, .94); }
+    .bg-item:nth-child(even) { display: none; }
+  }
 
   /* numbers table, same style as the coin page's eight spends */
   .tbl-wrap { max-width: 520px; margin: 30px auto 0; }
@@ -523,7 +529,8 @@
   (() => {
     const bg = document.querySelector(".purpose-bg"), sec = document.getElementById("purpose");
     if (!bg || !sec) return;
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // no drift on phones: moving blurred pieces means redrawing them every frame
+    const still = matchMedia("(prefers-reduced-motion: reduce), (max-width: 640px), (hover: none)").matches;
     const clamp = (v) => Math.min(1, Math.max(0, v));
     let ticking = false;
     const update = () => {
