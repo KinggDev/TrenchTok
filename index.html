@@ -243,7 +243,10 @@
   }
 
   /* closing statement */
-  .closing-sec { max-width: 640px; margin: 170px auto 0; padding: 0 16px 160px; text-align: center; }
+  .closing-sec { position: relative; max-width: 640px; margin: 170px auto 0; padding: 0 16px 160px; text-align: center; }
+  /* TikTok pink glow rising from the bottom edge of the page */
+  .closing-sec::before { content: ""; position: absolute; z-index: -1; left: 50%; bottom: 0; width: 100vw; height: 520px; transform: translateX(-50%); pointer-events: none;
+    background: radial-gradient(ellipse 110% 100% at 50% 100%, rgba(254, 44, 85, .16), rgba(254, 44, 85, .06) 45%, rgba(254, 44, 85, 0) 80%); }
   .closing { font-family: "Newsreader", serif; font-size: clamp(22px, 3.4vw, 28px); line-height: 1.4; letter-spacing: -0.01em; color: var(--head); margin: 0 0 22px; text-wrap: balance; }
   .closing.last { margin: 40px 0 0; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: -0.02em; }
 
