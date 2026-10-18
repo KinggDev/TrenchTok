@@ -135,6 +135,22 @@
   .vnote { margin: 18px 0 0; font-size: 11px; color: var(--faint); }
   .viral .textlink { margin-top: 14px; }
 
+  /* highlighter sweep on "Impact is huge." when the section scrolls into view.
+     The pink stroke sits on its own layer, roughened and softened by the #marker-rough
+     SVG filter; the letters turn black in step with it so they stay readable. */
+  .marker { position: relative; isolation: isolate; white-space: nowrap; padding: 0 .12em; margin: 0 -.04em; }
+  .marker::before { content: ""; position: absolute; z-index: -1; left: -.06em; right: -.1em; top: 8%; bottom: 2%; background: linear-gradient(100deg, #fe2c55, #f0244c 60%, #fe3a60); opacity: .92; border-radius: .2em .35em .25em .4em; filter: url(#marker-rough); clip-path: inset(-30% 110% -30% -10%); transition: clip-path 1.1s cubic-bezier(.6, .05, .25, 1) .25s; }
+  .marker.on::before { clip-path: inset(-30% -10% -30% -10%); }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .marker .ink { color: transparent; background: linear-gradient(90deg, #0a0a0a 0 50%, var(--head) 50% 100%) no-repeat 100% 0 / 200% 100%; -webkit-background-clip: text; background-clip: text; transition: background-position 1.1s cubic-bezier(.6, .05, .25, 1) .25s; }
+    .marker.on .ink { background-position: 0 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marker::before, .marker .ink { transition: none; }
+    .marker::before { clip-path: inset(-30% -10% -30% -10%); }
+    .marker .ink { background-position: 0 0; }
+  }
+
   /* flow diagram */
   .flow { list-style: none; padding: 0; margin: 44px auto 0; display: flex; flex-direction: column; align-items: center; gap: 28px; }
   .flow li { position: relative; width: 132px; padding: 7px 8px 8px; background: #151515; border: 1px solid #3c3c3c; border-radius: 6px; text-align: center; line-height: 1.35; }
@@ -200,6 +216,13 @@
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="marker-rough" x="-10%" y="-40%" width="120%" height="180%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.03 0.16" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+    <feGaussianBlur stdDeviation="1.4"/>
+  </filter>
+</svg>
 <nav class="nav" aria-label="Main">
   <a class="brand" href="index.html"><img src="brand_assets/logo_transparent.png" alt="" width="24" height="24">trenchtok</a>
   <div class="nav-links">
@@ -257,7 +280,7 @@
   </section>
 
   <section class="col section centered" id="idea">
-    <h2>The idea is small. Impact is huge.</h2>
+    <h2>The idea is small. <span class="marker"><span class="ink">Impact is huge.</span></span></h2>
     <div class="mid">
       <p>Most normies assume that crypto and especially memecoins are a scam. We're here to change that.</p>
       <p>When a normal person sees an insane edit of some kid who made <span class="money">$40,000,000</span> in one day trading some memecoin he will be shocked. "Wow how the f#ck are those kids retiring off some memes on the internet." They will start questioning their own place in life and start researching about what they do.</p>
@@ -394,6 +417,18 @@
     });
     // Arriving from the coin page with a #section in the address.
     if (location.hash) addEventListener("load", () => go(location.hash.slice(1), "auto"));
+  })();
+</script>
+<script>
+  // Sweep the highlighter across "Impact is huge." the first time it comes into view.
+  (() => {
+    const m = document.querySelector(".marker");
+    if (!m) return;
+    if (!("IntersectionObserver" in window)) { m.classList.add("on"); return; }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { m.classList.add("on"); io.disconnect(); }
+    }, { threshold: 1 });
+    io.observe(m);
   })();
 </script>
 <script src="mcap.js?v=8"></script>
