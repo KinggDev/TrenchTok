@@ -148,10 +148,25 @@
   .iphone::before { left: -4px; top: 112px; height: 54px; box-shadow: 0 -38px 0 -12px #2a2a2a; }
   .iphone::after { right: -4px; top: 140px; height: 74px; }
   .iphone-screen { position: relative; aspect-ratio: 9 / 19.5; background: #000; border-radius: 38px; overflow: hidden; }
-  .iphone-screen iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  .phone-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+  .tap-sound { position: absolute; inset: 0; z-index: 1; padding: 0; border: 0; background: transparent; cursor: pointer; }
+  .tap-sound[hidden] { display: none; }
+  .tap-sound .pill { position: absolute; left: 50%; top: 74%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px 9px 13px; border-radius: 999px; background: rgba(0, 0, 0, .66); border: 1px solid rgba(255, 255, 255, .28); font: 600 12.5px "DM Sans", sans-serif; color: #fff; white-space: nowrap; animation: tap-pulse 2s ease-in-out infinite; }
+  .tap-sound svg { width: 16px; height: 16px; fill: #fff; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .tap-sound:focus-visible .pill { outline: 1px solid #fff; outline-offset: 2px; }
+  @keyframes tap-pulse { 50% { transform: translate(-50%, -50%) scale(1.06); } }
+  @media (prefers-reduced-motion: reduce) { .tap-sound .pill { animation: none; } }
+  .sound { position: absolute; right: 14px; bottom: 16px; z-index: 2; width: 34px; height: 34px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(255, 255, 255, .25); border-radius: 50%; background: rgba(0, 0, 0, .55); cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background-color .2s, transform .2s; }
+  .sound:hover { background: rgba(0, 0, 0, .75); }
+  .sound:active { transform: scale(.94); }
+  .sound:focus-visible { outline: 1px solid var(--head); outline-offset: 2px; }
+  .sound svg { width: 17px; height: 17px; fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .sound .spk { fill: #fff; }
+  .sound .on { display: none; }
+  .sound[aria-pressed="true"] .on { display: inline; }
+  .sound[aria-pressed="true"] .off { display: none; }
   .island { position: absolute; top: 10px; left: 50%; width: 31%; height: 24px; transform: translateX(-50%); background: #000; border-radius: 14px; pointer-events: none; }
-  .vnote { margin: 18px 0 0; font-size: 11px; color: var(--faint); }
-  .viral .textlink { margin-top: 14px; }
+  .viral .textlink { margin-top: 28px; }
 
   /* highlighter sweep on "Impact is huge." when the section scrolls into view.
      The pink stroke sits on its own layer, roughened and softened by the #marker-rough
@@ -387,12 +402,13 @@
       <span class="phone-glow" aria-hidden="true"></span>
     <div class="iphone">
       <div class="iphone-screen">
-        <iframe src="https://www.tiktok.com/player/v1/7672852454194695456?music_info=0&amp;description=0&amp;rel=0&amp;native_context_menu=0" title="Kimchi 40 million trade, TikTok video by trench.tok" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <video class="phone-video" src="media/viral.mp4" poster="media/viral-poster.jpg" loop playsinline preload="none" aria-label="Kimchi 40 million trade, TikTok video by trench.tok"></video>
+        <button type="button" class="tap-sound" hidden><span class="pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9a4.5 4.5 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none"/></svg>Tap for sound</span></button>
+        <button type="button" class="sound" aria-pressed="false" aria-label="Turn sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="on" d="M16 9a4.5 4.5 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
         <span class="island" aria-hidden="true"></span>
       </div>
     </div>
     </div>
-    <p class="vnote">Video not showing? Disable your ad blocker to watch the preview.</p>
     <a class="textlink" href="https://www.tiktok.com/@trench.tok/video/7672852454194695456" target="_blank" rel="noopener">Watch it on TikTok</a>
   </section>
 
@@ -603,6 +619,47 @@
     addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     addEventListener("resize", update);
     update();
+  })();
+</script>
+<script>
+  // Phone video: plays with sound when it comes on screen. Browsers block sound until the
+  // visitor has clicked or tapped somewhere on the site, so if that's refused it plays
+  // muted and turns the sound on at the first click, tap or key press. Pauses off screen.
+  (() => {
+    const v = document.querySelector(".phone-video"), btn = document.querySelector(".sound");
+    if (!v) return;
+    let wantSound = true; // the visitor's choice; the button flips it
+    const tap = document.querySelector(".tap-sound");
+    const sync = () => {
+      btn?.setAttribute("aria-pressed", String(!v.muted));
+      btn?.setAttribute("aria-label", v.muted ? "Turn sound on" : "Turn sound off");
+      if (tap) tap.hidden = !(v.muted && wantSound);
+    };
+    tap?.addEventListener("click", () => { wantSound = true; v.muted = false; v.play().catch(() => {}); });
+    v.addEventListener("volumechange", sync);
+    const start = () => {
+      v.muted = !wantSound;
+      v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+    };
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach((e) => (e.isIntersecting ? start() : v.pause()));
+      }, { threshold: 0.35 }).observe(v);
+    } else start();
+    // first real interaction anywhere unlocks sound
+    const unlock = (e) => {
+      if (e.target instanceof Node && ((btn && btn.contains(e.target)) || (tap && tap.contains(e.target)))) return; // these handle themselves
+      ["pointerdown", "keydown"].forEach((t) => removeEventListener(t, unlock, true));
+      if (wantSound && v.muted && !v.paused) { v.muted = false; v.play().catch(() => {}); }
+    };
+    ["pointerdown", "keydown"].forEach((t) => addEventListener(t, unlock, true));
+    btn?.addEventListener("click", () => {
+      wantSound = v.muted;
+      v.muted = !wantSound;
+      v.play().catch(() => {});
+      sync();
+    });
+    sync();
   })();
 </script>
 <script src="mcap.js?v=8"></script>
