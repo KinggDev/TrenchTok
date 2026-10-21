@@ -27,7 +27,10 @@ module.exports = async (req, res) => {
     const body = await upstream.text();
     // Vercel's CDN shares each answer for a few seconds, so pump.fun is asked
     // at most about once per refresh no matter how many people are on the site.
-    res.setHeader("Cache-Control", upstream.ok ? "public, s-maxage=4, stale-while-revalidate=10" : "no-store");
+    // Share good answers and "not launched yet" (404) answers for a few seconds, so visitors
+    // waiting for the launch don't each cost a function run.
+    const share = upstream.ok || upstream.status === 404;
+    res.setHeader("Cache-Control", share ? "public, s-maxage=4, stale-while-revalidate=10" : "no-store");
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     return res.status(upstream.status).send(body);
   } catch (err) {

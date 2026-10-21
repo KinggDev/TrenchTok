@@ -1,11 +1,11 @@
 // Live market cap from pump.fun.
 // Put the coin's contract address (mint) here on launch day.
 // For testing, any page also accepts ?ca=<address> in the URL.
-const TRENCHTOK_CA = "";
+const TRENCHTOK_CA = "9ehqY96fTBavPPDfxHXzPyAJ3ne7o8qEkoxhDegpump";
 // Set to true to turn the live market cap back on for the public site. While
 // false, trenchtok.fun makes no requests to pump.fun or /api/pump.
 // On localhost the chart always runs, for testing.
-const LIVE = false;
+const LIVE = true;
 
 (() => {
   const REFRESH_MS = 5000;
@@ -104,8 +104,12 @@ const LIVE = false;
 
       // Young coins get 1-minute candles (last 5 hours), older ones 5-minute candles (last 24 hours).
       const young = Date.now() - coin.created_timestamp < 5 * 3600e3;
-      const candles = await getJSON(candleUrl(ca, young ? "1m" : "5m", young ? 300 : 288, coin.created_timestamp));
-      const points = candles.map((c) => ({ t: c.timestamp, v: parseFloat(c.close) * supply }));
+      // Price history is a bonus: right after launch pump.fun may have none yet, so a failed or
+      // empty answer still shows the market cap, and the line fills in as trades come in.
+      let candles = [];
+      try { candles = await getJSON(candleUrl(ca, young ? "1m" : "5m", young ? 300 : 288, coin.created_timestamp)); } catch (e) {}
+      const points = (Array.isArray(candles) ? candles : []).map((c) => ({ t: c.timestamp, v: parseFloat(c.close) * supply }));
+      if (!points.length && coin.created_timestamp) points.push({ t: coin.created_timestamp, v: mcap });
       points.push({ t: Date.now(), v: mcap });
 
       setReadouts(fmt(mcap));
@@ -119,7 +123,8 @@ const LIVE = false;
       }
       prev = mcap;
     } catch (err) {
-      if (err.status === 404) setStatus("pump.fun has no coin at this address. Check the contract address in mcap.js.");
+      // 404 = not launched yet; keep checking so the chart appears on its own at launch
+      if (err.status === 404) setStatus("The chart goes live the moment the coin launches on pump.fun.");
       else if (prev === null) setStatus("Can't reach pump.fun right now. Trying again every 5 seconds.");
     }
     if (!document.hidden) timer = setTimeout(refresh, REFRESH_MS);
